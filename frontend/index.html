@@ -1,0 +1,35 @@
+<!doctype html>
+<html
+	lang="ru"
+	data-theme="dark"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href="/logo.png"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Приемная комиссия</title>
+	</head>
+	<body>
+		<div id="root"></div>
+		<script>
+			document.documentElement.classList.toggle(
+				'dark',
+				localStorage.theme === 'dark' ||
+					(!('theme' in localStorage) &&
+						window.matchMedia('(prefers-color-scheme: dark)').matches)
+			)
+		</script>
+
+		<script
+			type="module"
+			src="/src/main.jsx"
+		></script>
+	</body>
+</html>

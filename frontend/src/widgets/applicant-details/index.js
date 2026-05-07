@@ -1,0 +1,6 @@
+export { default as ApplicantBenefitData } from './ApplicantBenefitData'
+export { default as ApplicantDocumentData } from './ApplicantDocumentData'
+export { default as ApplicantEducationInfo } from './ApplicantEducationInfo'
+export { default as ApplicantGroupData } from './ApplicantGroupData'
+export { default as ApplicantPersonalData } from './ApplicantPersonalData'
+export { default as ApplicantSubjectGradesData } from './ApplicantSubjectGradesData'
