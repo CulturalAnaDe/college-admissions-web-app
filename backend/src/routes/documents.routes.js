@@ -4,6 +4,7 @@ const documentsController = require('../controllers/documents.controller')
 const upload = require('../middlewares/upload.middleware')
 
 router.get('/', documentsController.getAllDocuments)
+router.get('/file/:id', documentsController.getDocument)
 router.get('/download', documentsController.downloadDocumentsAllApplicants)
 router.get('/download/:id', documentsController.downloadDocumentsApplicantId)
 router.get('/:id', documentsController.getDocumentById)

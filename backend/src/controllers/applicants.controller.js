@@ -175,7 +175,13 @@ exports.updateStatusApplicant = catchAsync(async (req, res) => {
 
 exports.updateStatusAll = catchAsync(async (req, res) => {
 	const applicants = await Applicant.findAll({
-		include: [EducationInfo, SubjectGrade, Document, { model: Qualification }]
+		include: [
+			EducationInfo,
+			SubjectGrade,
+			Benefit,
+			Document,
+			{ model: Qualification }
+		]
 	})
 
 	const allGroups = await Group.findAll({

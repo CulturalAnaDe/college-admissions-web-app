@@ -44,6 +44,7 @@ const useCreateApplicant = () => {
 			lastName: '',
 			middleName: '',
 			iin: '',
+			address: '',
 			birthDate: '',
 			phone: '',
 			motherPhone: '',

@@ -10,6 +10,7 @@ const ApplicantExport = ({ applicants, specialties }) => {
 		fio: true,
 		iin: true,
 		birthDate: true,
+		address: true,
 		qualification: true,
 		specialty: true,
 		group: true,
@@ -23,6 +24,7 @@ const ApplicantExport = ({ applicants, specialties }) => {
 	const fieldsConfig = [
 		{ key: 'fio', label: 'ФИО' },
 		{ key: 'iin', label: 'ИИН' },
+		{ key: 'address', label: 'Адрес' },
 		{ key: 'birthDate', label: 'Дата рождения' },
 		{ key: 'qualification', label: 'Квалификация' },
 		{ key: 'specialty', label: 'Специальность' },
@@ -39,6 +41,7 @@ const ApplicantExport = ({ applicants, specialties }) => {
 		fio: a => `${a.lastName} ${a.firstName} ${a.middleName}`,
 		iin: a => a.iin,
 		birthDate: a => a.birthDate,
+		address: a => a.address,
 		qualification: a => a.Qualification?.name || '-',
 		specialty: (a, specialties) =>
 			specialties.find(s => s.id === a.Qualification?.SpecialtyId)?.name || '-',

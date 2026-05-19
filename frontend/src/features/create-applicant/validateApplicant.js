@@ -11,13 +11,18 @@ const validateApplicant = values => {
 	if (!values.lastName) {
 		errors.lastName = 'Фамилия не заполнена'
 	} else if (!/^[A-Za-zА-Яа-я]+$/.test(values.lastName)) {
-		errors.firstName = 'Фамилия должна состоять только из букв'
+		errors.lastName = 'Фамилия должна состоять только из букв'
 	}
 	if (!values.iin) {
 		errors.iin = 'ИИН не заполнен'
 	} else if (!/^\d{12}$/.test(values.iin)) {
 		errors.iin = 'ИИН должен состоять из 12 цифр'
 	}
+
+	if (!values.address) {
+		errors.address = 'Адрес не заполнен'
+	}
+
 	if (!values.birthDate) errors.birthDate = 'Дата рождения не заполнена'
 	if (!values.phone) {
 		errors.phone = 'Телефон не заполнен'

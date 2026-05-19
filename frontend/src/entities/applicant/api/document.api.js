@@ -27,10 +27,11 @@ export const addDocuments = async (applicantId, formData) => {
 
 export const downloadDocumentsApplicantId = async id => {
 	const res = await apiClient.get(`/api/documents/download/${id}`, {
-		responseType: 'blob'
+		responseType: 'blob',
+		withCredentials: true
 	})
 
-	return res.data
+	saveAs(res.data, `documents_${id}.zip`)
 }
 
 export const downloadDocumentsAllApplicants = async () => {
@@ -40,4 +41,21 @@ export const downloadDocumentsAllApplicants = async () => {
 	})
 
 	saveAs(res.data, 'documents_applicants.zip')
+}
+
+export const downloadDocumentFile = async id => {
+	const res = await apiClient.get(`/api/documents/file/${id}`, {
+		responseType: 'blob',
+		withCredentials: true
+	})
+
+	saveAs(res.data, `document_${id}`)
+}
+
+export const getDocumentImage = async id => {
+	const res = await apiClient.get(`/api/documents/file/${id}`, {
+		responseType: 'blob'
+	})
+
+	return URL.createObjectURL(res.data)
 }

@@ -2,9 +2,9 @@ import { downloadDocumentsApplicantId } from '@/entities/applicant'
 import StatusBadge from '@/entities/applicant/ui/StatusBadge'
 import useEditApplicant from '@/features/edit-applicant/useEditApplicant'
 import CustomButton from '@/shared/components/ui/CustomButton'
+import { useGetImage } from '@/shared/hooks/useGetImage'
 import ApplicantFormCarousel from '@/widgets/applicant-form/ApplicantFormCarousel'
 import Loading from '@/widgets/common/Loading'
-import { saveAs } from 'file-saver'
 
 const ApplicantForm = () => {
 	const {
@@ -19,12 +19,11 @@ const ApplicantForm = () => {
 		benefits
 	} = useEditApplicant()
 
+	const { photoUser } = useGetImage(applicant)
+
 	if (loading || !applicant) return <Loading />
 
-	const photo = applicant.Documents?.find(doc => doc.type === 'photo')
-	const photoUrl = photo
-		? `http://localhost:3000/${photo.filePath}`
-		: '/default-photo.jpg'
+	const photoUrl = photoUser
 
 	const isAllDocuments = () => {
 		const requiredDocuments = [
@@ -47,11 +46,6 @@ const ApplicantForm = () => {
 		})
 
 		return missingDocs.length === 0
-	}
-
-	const handleDownload = async id => {
-		const blob = await downloadDocumentsApplicantId(id)
-		saveAs(blob, `documents_${id}.zip`)
 	}
 
 	return (
@@ -79,7 +73,7 @@ const ApplicantForm = () => {
 							</span>
 							<CustomButton
 								text='Скачать'
-								onClick={() => handleDownload(applicant?.id)}
+								onClick={() => downloadDocumentsApplicantId(applicant?.id)}
 							/>
 						</div>
 					) : (
@@ -89,7 +83,7 @@ const ApplicantForm = () => {
 							</span>
 							<CustomButton
 								text='Скачать'
-								onClick={() => handleDownload(applicant?.id)}
+								onClick={() => downloadDocumentsApplicantId(applicant?.id)}
 							/>
 						</div>
 					)}

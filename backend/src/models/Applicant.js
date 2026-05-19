@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
 		lastName: { type: DataTypes.STRING, allowNull: false },
 		firstName: { type: DataTypes.STRING, allowNull: false },
 		middleName: { type: DataTypes.STRING, allowNull: false },
+		address: { type: DataTypes.STRING, allowNull: false },
 		birthDate: { type: DataTypes.DATEONLY, allowNull: false },
 		phone: { type: DataTypes.STRING, allowNull: false },
 		motherPhone: { type: DataTypes.STRING, allowNull: false },

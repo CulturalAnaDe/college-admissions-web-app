@@ -26,6 +26,11 @@ const PersonalData = ({ formik }) => {
 			label: 'Дата рождения',
 			type: 'date'
 		},
+		address: {
+			label: 'Адрес',
+			placeholder: 'Улица такая такая',
+			type: 'text'
+		},
 		phone: {
 			label: 'Телефон абитуриента',
 			placeholder: '+7 701 123 4567',

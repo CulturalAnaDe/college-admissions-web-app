@@ -19,7 +19,7 @@ app.use(
 
 app.use(
 	session({
-		secret: process.env.SESSION_SECRET || 'fallback_secret',
+		secret: process.env.SESSION_SECRET || 'secret',
 		resave: false,
 		saveUninitialized: false,
 		//proxy: true,
@@ -34,8 +34,6 @@ app.use(
 app.use('/api/auth', require('./src/routes/auth.routes'))
 
 app.use('/api', requireAuth)
-
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 app.use('/api/specialties', require('./src/routes/specialties.routes'))
 app.use('/api/qualifications', require('./src/routes/qualifications.routes'))

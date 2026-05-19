@@ -134,8 +134,21 @@ exports.downloadDocumentsApplicantId = catchAsync(async (req, res) => {
 
 	archive.pipe(res)
 	documents.forEach(doc => {
-		const fileAbsPath = path.resolve(__dirname, '..', '..', doc.filePath)
-		archive.file(fileAbsPath, { name: path.basename(doc.filePath) })
+		const absolutePath = path.resolve(__dirname, '..', '..', doc.filePath)
+		archive.file(absolutePath, { name: path.basename(doc.filePath) })
 	})
 	await archive.finalize()
+})
+
+exports.getDocument = catchAsync(async (req, res) => {
+	const { id } = req.params
+
+	const document = await Document.findByPk(id)
+	if (!document) {
+		throw httpError('Документа не существует', 404)
+	}
+
+	const absolutePath = path.resolve(__dirname, '..', '..', document.filePath)
+
+	return res.download(absolutePath)
 })

@@ -226,6 +226,7 @@ const ApplicantList = () => {
 					'Специальность',
 					'ИИН',
 					'Дата рождения',
+					'Адрес',
 					'Телефон',
 					'Статус',
 					'Дата добавления',
@@ -251,6 +252,9 @@ const ApplicantList = () => {
 						</td>
 						<td className='p-2 border-t border-gray-300 dark:border-[#0E1A29] text-xs'>
 							{app.birthDate}
+						</td>
+						<td className='p-2 border-t border-gray-300 dark:border-[#0E1A29] text-xs'>
+							{app.address}
 						</td>
 						<td className='p-2 border-t border-gray-300 dark:border-[#0E1A29] text-sm'>
 							{app.phone}

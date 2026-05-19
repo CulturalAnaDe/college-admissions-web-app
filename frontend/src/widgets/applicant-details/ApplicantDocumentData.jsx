@@ -1,3 +1,4 @@
+import { downloadDocumentFile } from '@/entities/applicant/api/document.api.js'
 import CustomButton from '@/shared/components/ui/CustomButton'
 import CustomSelect from '@/shared/components/ui/CustomSelect'
 
@@ -78,17 +79,11 @@ const ApplicantDocumentData = ({ applicant, setApplicant, documentDelete }) => {
 								<label className='text-sm text-[#3B568A]'>Файл</label>
 								<div className='flex items-center min-h-10'>
 									{doc.file || doc.filePath ? (
-										<a
-											href={
-												doc.filePreview ||
-												`http://localhost:3000/${doc.filePath}`
-											}
-											target='_blank'
-											rel='noreferrer'
-											className='text-blue-500 underline text-sm truncate block w-full hover:text-blue-600 transition-colors'
-										>
-											{doc.file ? 'Новый файл' : 'Сохранённый файл'}
-										</a>
+										<CustomButton
+											onClick={() => downloadDocumentFile(doc.id)}
+											text='Скачать'
+											className='w-full'
+										/>
 									) : (
 										<div className='w-full'>
 											<label

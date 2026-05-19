@@ -51,6 +51,10 @@ const ApplicantPersonalData = ({ applicant, setApplicant }) => {
 			placeholder: '19.03.2007',
 			type: 'date'
 		},
+		address: {
+			label: 'Адрес',
+			placeholder: 'Улица такая такая'
+		},
 		phone: {
 			label: 'Телефон абитуриента',
 			placeholder: '+7 701 123 4567',
