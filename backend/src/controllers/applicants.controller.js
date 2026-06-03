@@ -6,6 +6,7 @@ const {
 	SubjectGrade,
 	Document,
 	Benefit,
+	LegalRepresentative,
 	sequelize
 } = require('../models')
 
@@ -20,7 +21,8 @@ exports.getAllApplicants = catchAsync(async (req, res) => {
 			EducationInfo,
 			SubjectGrade,
 			Document,
-			Benefit
+			Benefit,
+			LegalRepresentative
 		]
 	})
 	res.json(applicant)
@@ -35,7 +37,8 @@ exports.getApplicantById = catchAsync(async (req, res) => {
 			EducationInfo,
 			SubjectGrade,
 			Document,
-			Benefit
+			Benefit,
+			LegalRepresentative
 		]
 	})
 	if (!applicant) throw httpError('Абитуриента не существует', 404)
@@ -63,7 +66,8 @@ exports.createApplicant = catchAsync(async (req, res) => {
 			Group,
 			EducationInfo,
 			SubjectGrade,
-			Document
+			Document,
+			LegalRepresentative
 		]
 	})
 
@@ -83,7 +87,8 @@ exports.updateApplicant = catchAsync(async (req, res) => {
 			Group,
 			EducationInfo,
 			SubjectGrade,
-			Document
+			Document,
+			LegalRepresentative
 		]
 	})
 	res.json(updatedApplicant)

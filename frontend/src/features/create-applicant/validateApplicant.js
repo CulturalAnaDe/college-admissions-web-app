@@ -19,11 +19,12 @@ const validateApplicant = values => {
 		errors.iin = 'ИИН должен состоять из 12 цифр'
 	}
 
-	if (!values.address) {
-		errors.address = 'Адрес не заполнен'
-	}
-
+	if (!values.address) errors.address = 'Адрес не заполнен'
 	if (!values.birthDate) errors.birthDate = 'Дата рождения не заполнена'
+	if (!values.gender) errors.gender = 'Пол не заполнен'
+	if (!values.citizenship) errors.citizenship = 'Гражданство не заполнено'
+	if (!values.nationality) errors.nationality = 'Национальность не заполнена'
+
 	if (!values.phone) {
 		errors.phone = 'Телефон не заполнен'
 	} else if (!/^\+\d{10,12}$/.test(values.phone)) {

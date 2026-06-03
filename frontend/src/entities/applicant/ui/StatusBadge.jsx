@@ -21,7 +21,9 @@ const StatusBadge = ({ status }) => {
 	}
 
 	return (
-		<span className={`px-2 py-1 rounded-lg text-sm font-semibold ${bgColor}`}>
+		<span
+			className={`px-2 py-1 rounded-lg text-sm font-semibold whitespace-nowrap ${bgColor}`}
+		>
 			{name || 'pending'}
 		</span>
 	)

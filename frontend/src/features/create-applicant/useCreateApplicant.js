@@ -46,9 +46,10 @@ const useCreateApplicant = () => {
 			iin: '',
 			address: '',
 			birthDate: '',
+			gender: '',
+			nationality: '',
+			citizenship: '',
 			phone: '',
-			motherPhone: '',
-			fatherPhone: '',
 			email: '',
 			status: 'pending',
 
@@ -65,7 +66,9 @@ const useCreateApplicant = () => {
 				educationLanguage: ''
 			},
 
-			SubjectGrades: []
+			SubjectGrades: [],
+
+			LegalRepresentative: null
 		},
 
 		validate: validateApplicant,

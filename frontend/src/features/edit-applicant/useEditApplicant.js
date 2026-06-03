@@ -4,7 +4,8 @@ import {
 	deleteDocument,
 	getApplicantById,
 	updateApplicant,
-	updateEducationInfo
+	updateEducationInfo,
+	updateRepresentative
 } from '@/entities/applicant'
 import { getAllBenefit } from '@/entities/benefit'
 import { getAllGroup } from '@/entities/group'
@@ -93,6 +94,8 @@ const useEditApplicant = () => {
 					applicant.EducationInfo
 				)
 			}
+
+			await updateRepresentative(applicant?.id, applicant?.LegalRepresentative)
 
 			const newDocs = applicant.Documents.filter(
 				doc => doc.file instanceof File && doc.type

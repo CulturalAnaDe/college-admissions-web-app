@@ -16,7 +16,8 @@ const ApplicantForm = () => {
 		loading,
 		handleSubmit,
 		documentDelete,
-		benefits
+		benefits,
+		representative
 	} = useEditApplicant()
 
 	const { photoUser } = useGetImage(applicant)
@@ -99,6 +100,7 @@ const ApplicantForm = () => {
 					specialties={specialties}
 					benefits={benefits}
 					documentDelete={documentDelete}
+					representative={representative}
 				/>
 			</div>
 

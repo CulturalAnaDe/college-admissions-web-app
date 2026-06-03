@@ -77,6 +77,12 @@ const ApplicantSubjectGrades = ({ applicant, setApplicant }) => {
 
 	const grades = ['5', '4', '3', '2', '1']
 
+	const gradesABS =
+		Math.round(
+			applicant.SubjectGrades?.reduce((sum, g) => sum + Number(g.grade), 0) /
+				applicant.SubjectGrades?.length
+		) || 0
+
 	return (
 		<div className='border-2 border-gray-300 dark:border-[#0E1A29] dark:bg-[#0A1424] rounded-lg p-4 flex flex-col'>
 			<h2 className='text-xl mb-4'>Предметы и оценки</h2>
@@ -103,6 +109,23 @@ const ApplicantSubjectGrades = ({ applicant, setApplicant }) => {
 						text='Добавить'
 						className='whitespace-nowrap'
 					/>
+					<div className='flex justify-center items-center gap-4'>
+						<span>Средняя оценка: </span>
+						<div
+							className={`
+									w-8 h-8 shrink-0 flex items-center justify-center rounded-md text-xs font-bold
+									${
+										gradesABS >= 4
+											? 'bg-emerald-600 text-white'
+											: gradesABS <= 2
+												? 'bg-rose-600 text-white'
+												: 'bg-amber-500 text-white'
+									}
+								`}
+						>
+							{gradesABS}
+						</div>
+					</div>
 				</div>
 			</div>
 

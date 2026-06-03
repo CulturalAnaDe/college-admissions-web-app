@@ -9,6 +9,13 @@ const Specialty = require('./Specialty')(sequelize, DataTypes)
 const Qualification = require('./Qualification')(sequelize, DataTypes)
 const Group = require('./Group')(sequelize, DataTypes)
 const Benefit = require('./Benefit')(sequelize, DataTypes)
+const LegalRepresentative = require('./LegalRepresentative')(
+	sequelize,
+	DataTypes
+)
+
+Applicant.hasOne(LegalRepresentative, { onDelete: 'CASCADE' })
+LegalRepresentative.belongsTo(Applicant)
 
 Specialty.hasMany(Qualification, { onDelete: 'CASCADE' })
 Qualification.belongsTo(Specialty)
@@ -43,5 +50,6 @@ module.exports = {
 	Specialty,
 	Qualification,
 	Group,
-	Benefit
+	Benefit,
+	LegalRepresentative
 }

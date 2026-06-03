@@ -4,6 +4,7 @@ import {
 	ApplicantEducationInfo,
 	ApplicantGroupData,
 	ApplicantPersonalData,
+	ApplicantRepresentativeData,
 	ApplicantSubjectGradesData
 } from '@/widgets/applicant-details'
 
@@ -33,6 +34,10 @@ const ApplicantFormCarousel = ({
 				applicant={applicant}
 				setApplicant={setApplicant}
 			/>
+			<ApplicantRepresentativeData
+				applicant={applicant}
+				setApplicant={setApplicant}
+			/>
 			<ApplicantBenefitData
 				applicant={applicant}
 				setApplicant={setApplicant}
@@ -42,7 +47,6 @@ const ApplicantFormCarousel = ({
 				applicant={applicant}
 				setApplicant={setApplicant}
 			/>
-
 			<ApplicantDocumentData
 				applicant={applicant}
 				setApplicant={setApplicant}

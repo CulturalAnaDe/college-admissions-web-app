@@ -43,6 +43,7 @@ app.use('/api/documents', require('./src/routes/documents.routes'))
 app.use('/api/benefit', require('./src/routes/benefit.routes'))
 app.use('/api/education', require('./src/routes/educationInfo.routes'))
 app.use('/api/subjectgrade', require('./src/routes/subjectGrade.routes'))
+app.use('/api/representative', require('./src/routes/representative.routes'))
 
 app.use(errorHandler)
 module.exports = app

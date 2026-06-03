@@ -57,7 +57,7 @@ const StatsList = () => {
 
 		const num1 = s.name.split(' ')
 		return {
-			name: (num1[0].slice(0, 1) + num1[1].slice(0, 1)).toUpperCase(),
+			name: (num1[0]?.slice(0, 1) + num1[1]?.slice(0, 1)).toUpperCase(),
 			value: count
 		}
 	})
