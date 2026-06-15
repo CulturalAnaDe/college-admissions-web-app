@@ -8,6 +8,7 @@ import { useBenefits } from '@/entities/benefit'
 import { useGroups } from '@/entities/group'
 import { useSpecialties } from '@/entities/specialty'
 import AcceptButton from '@/features/accept-applicant/AcceptButton.jsx'
+import UploadApplicantButton from '@/features/upload-applicant/UploadApplicantButton.jsx'
 import CustomButton from '@/shared/components/ui/CustomButton'
 import CustomSelect from '@/shared/components/ui/CustomSelect'
 import ApplicantDownloadDocs from '@/widgets/applicant-form/ApplicantDownloadDocs.jsx'
@@ -193,6 +194,8 @@ const ApplicantList = () => {
 
 				<div className='flex gap-2'>
 					<AcceptButton />
+
+					<UploadApplicantButton />
 
 					<ApplicantExport
 						applicants={applicants}

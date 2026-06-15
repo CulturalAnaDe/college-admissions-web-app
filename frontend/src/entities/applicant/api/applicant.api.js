@@ -58,3 +58,13 @@ export const updateStatusId = async (id, status) => {
 	const res = await apiClient.patch(`/api/applicant/${id}/status`, { status })
 	return res.data
 }
+
+export const uploadApplicant = async formData => {
+	const res = await apiClient.post('/api/applicant/upload', formData, {
+		headers: {
+			'Content-Type': undefined
+		}
+	})
+
+	return res.data
+}
