@@ -95,7 +95,8 @@ const useEditApplicant = () => {
 				)
 			}
 
-			await updateRepresentative(applicant?.id, applicant?.LegalRepresentative)
+			const representativeData = applicant?.LegalRepresentative || {}
+			await updateRepresentative(applicant?.id, representativeData)
 
 			const newDocs = applicant.Documents.filter(
 				doc => doc.file instanceof File && doc.type

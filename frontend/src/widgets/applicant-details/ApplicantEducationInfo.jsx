@@ -2,13 +2,13 @@ import CustomSelect from '@/shared/components/ui/CustomSelect'
 
 const ApplicantEducationInfo = ({ applicant, setApplicant }) => {
 	const handleChange = (name, e) => {
-		const { value, type, checked } = e.target
+		const value = e?.target ? e.target.value : e
 
 		setApplicant(prev => ({
 			...prev,
 			EducationInfo: {
 				...(prev?.EducationInfo || {}),
-				[name]: type === 'checkbox' ? checked : value
+				[name]: value
 			}
 		}))
 	}

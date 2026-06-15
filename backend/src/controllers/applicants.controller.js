@@ -13,6 +13,10 @@ const {
 const catchAsync = require('../utils/catchAsync')
 const httpError = require('../utils/httpError')
 
+const XLSX = require('xlsx')
+const fs = require('fs')
+const path = require('path')
+
 exports.getAllApplicants = catchAsync(async (req, res) => {
 	const applicant = await Applicant.findAll({
 		include: [
@@ -279,4 +283,68 @@ exports.updateStatusAll = catchAsync(async (req, res) => {
 	}
 
 	res.json({ message: 'Зачисление завершено' })
+})
+
+exports.uploadApplicantFile = catchAsync(async (req, res) => {
+	if (!req.file) throw httpError('Файла не существует', 404)
+
+	const book = XLSX.readFile(req.file.path)
+	const sheetName = book.SheetNames[0]
+	const sheet = book.Sheets[sheetName]
+	const data = XLSX.utils.sheet_to_json(sheet)
+
+	let createdCount = 0
+
+	for (const row of data) {
+		if (!row['Фамилия'] || !row['Имя'] || !row['ИИН']) continue
+
+		const t = await sequelize.transaction()
+
+		try {
+			const applicant = await Applicant.create(
+				{
+					lastName: row['Фамилия'].trim(),
+					firstName: row['Имя'].trim(),
+					middleName: row['Отчество'] ? row['Отчество'].trim() : null,
+					iin: String(row['ИИН']).trim(),
+					birthDate: row['Дата рождения'],
+					gender: row['Пол'],
+					nationality: row['Национальность'],
+					citizenship: row['Гражданство'],
+					address: row['Адрес'],
+					phone: row['Телефон абитуриента']
+						? String(row['Телефон абитуриента']).trim()
+						: null,
+					email: row['Почта'] ? row['Почта'].trim() : null,
+					status: 'pending'
+				},
+				{ transaction: t }
+			)
+
+			await EducationInfo.create(
+				{
+					ApplicantId: applicant.id,
+					baseClass: row['База (класс)'],
+					graduationYear: row['Год окончания'],
+					educationLanguage: row['Язык обучения'],
+					honorsCertificate: row['Красный диплом'] === 'Да'
+				},
+				{ transaction: t }
+			)
+
+			await t.commit()
+			createdCount++
+		} catch (err) {
+			await t.rollback()
+			console.error(`Ошибка при импорте строки с ИИН ${row['ИИН']}:`, err)
+		}
+	}
+
+	if (fs.existsSync(req.file.path)) {
+		fs.unlinkSync(req.file.path)
+	}
+
+	res.json({
+		message: `Импорт завершен успешно. Добавлено абитуриентов: ${createdCount} из ${data.length}`
+	})
 })

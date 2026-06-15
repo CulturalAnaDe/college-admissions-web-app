@@ -12,58 +12,67 @@ const Authorization = () => {
 	return (
 		<div className='flex flex-col min-h-screen'>
 			<div className='flex flex-col items-center justify-center grow gap-8'>
-				<h2 className='text-2xl font-bold text-[#113151] dark:text-white'>
-					Авторизация
-				</h2>
-
 				{step === 'id' && (
-					<form
-						onSubmit={formik.handleSubmit}
-						className='flex flex-col gap-4 w-sm'
-					>
-						<CustomInput
-							name='telegramId'
-							value={formik.values.telegramId}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-						/>
+					<>
+						<h2 className='text-2xl font-bold text-[#113151] dark:text-white'>
+							Авторизация
+						</h2>
 
-						{formik.touched.telegramId && formik.errors.telegramId && (
-							<div className='text-[#EF5350] text-sm'>
-								{formik.errors.telegramId}
-							</div>
-						)}
+						<form
+							onSubmit={formik.handleSubmit}
+							className='flex flex-col gap-4 w-sm'
+						>
+							<CustomInput
+								name='telegramId'
+								value={formik.values.telegramId}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+							/>
 
-						<CustomButton
-							type='submit'
-							text={loading ? 'Отправка...' : 'Отправить код'}
-							disabled={loading}
-						/>
-					</form>
+							{formik.touched.telegramId && formik.errors.telegramId && (
+								<div className='text-[#EF5350] text-sm'>
+									{formik.errors.telegramId}
+								</div>
+							)}
+
+							<CustomButton
+								type='submit'
+								text={loading ? 'Отправка...' : 'Отправить код'}
+								disabled={loading}
+							/>
+						</form>
+					</>
 				)}
 
 				{step === 'code' && (
-					<form
-						onSubmit={formik.handleSubmit}
-						className='flex flex-col gap-4 w-sm'
-					>
-						<CustomInput
-							name='code'
-							value={formik.values.code}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-						/>
+					<>
+						<h2 className='text-2xl font-bold text-[#113151] dark:text-white'>
+							Введите код
+						</h2>
+						<form
+							onSubmit={formik.handleSubmit}
+							className='flex flex-col gap-4 w-sm'
+						>
+							<CustomInput
+								name='code'
+								value={formik.values.code}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+							/>
 
-						{formik.touched.code && formik.errors.code && (
-							<div className='text-[#EF5350] text-sm'>{formik.errors.code}</div>
-						)}
+							{formik.touched.code && formik.errors.code && (
+								<div className='text-[#EF5350] text-sm'>
+									{formik.errors.code}
+								</div>
+							)}
 
-						<CustomButton
-							type='submit'
-							text={loading ? 'Проверка...' : 'Подтвердить'}
-							disabled={loading}
-						/>
-					</form>
+							<CustomButton
+								type='submit'
+								text={loading ? 'Проверка...' : 'Подтвердить'}
+								disabled={loading}
+							/>
+						</form>
+					</>
 				)}
 
 				{error && <div className='text-red-500'>{error}</div>}

@@ -27,6 +27,7 @@ app.set('bot', bot)
 		console.log('База данных подключена')
 
 		//await sequelize.sync({ force: true }) СБРОСИТЬ СТРУКТУРУ БД АККУРАТНО!
+		//await sequelize.sync({ alter: true })
 
 		await sequelize.sync()
 		console.log('Таблицы синхронизированы')

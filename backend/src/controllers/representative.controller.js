@@ -37,16 +37,14 @@ exports.createRepresentative = catchAsync(async (req, res) => {
 
 exports.updateRepresentative = catchAsync(async (req, res) => {
 	const { applicantId } = req.params
-
 	const applicant = await Applicant.findByPk(applicantId)
 	if (!applicant) throw httpError('Абитуриент отсутствует', 404)
 
-	const [updatedRepresent] = await LegalRepresentative.update(req.body, {
+	await LegalRepresentative.update(req.body, {
 		where: { ApplicantId: applicantId }
 	})
-	if (!updatedRepresent) throw httpError('Опекуна не существует', 404)
 
-	res.json(updatedRepresent)
+	res.json({ success: true })
 })
 
 exports.deleteRepresentative = catchAsync(async (req, res) => {
