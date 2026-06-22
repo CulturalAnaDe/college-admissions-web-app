@@ -1,6 +1,7 @@
 import {
 	addDocuments,
 	assignBenefits,
+	createRepresentative,
 	deleteDocument,
 	getApplicantById,
 	updateApplicant,
@@ -95,8 +96,14 @@ const useEditApplicant = () => {
 				)
 			}
 
-			const representativeData = applicant?.LegalRepresentative || {}
-			await updateRepresentative(applicant?.id, representativeData)
+			const rep = applicant?.LegalRepresentative
+			const hasData = rep && (rep.firstName?.trim() || rep.lastName?.trim())
+
+			if (rep?.id) {
+				await updateRepresentative(applicant.id, rep)
+			} else if (hasData) {
+				await createRepresentative(applicant.id, rep)
+			}
 
 			const newDocs = applicant.Documents.filter(
 				doc => doc.file instanceof File && doc.type

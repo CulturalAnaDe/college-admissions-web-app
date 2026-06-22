@@ -160,6 +160,7 @@ exports.assignBenefits = catchAsync(async (req, res) => {
 			Group,
 			EducationInfo,
 			SubjectGrade,
+			LegalRepresentative,
 			Document
 		]
 	})
@@ -189,6 +190,7 @@ exports.updateStatusAll = catchAsync(async (req, res) => {
 			SubjectGrade,
 			Benefit,
 			Document,
+			LegalRepresentative,
 			{ model: Qualification }
 		]
 	})
@@ -331,6 +333,69 @@ exports.uploadApplicantFile = catchAsync(async (req, res) => {
 				},
 				{ transaction: t }
 			)
+
+			if (row['Оценки']) {
+				const gradesData = []
+
+				const pairs = String(row['Оценки']).split(',')
+
+				for (const pair of pairs) {
+					const trimmedPair = pair.trim()
+
+					const [subjectName, grade] = trimmedPair.split('-')
+
+					if (subjectName && grade) {
+						gradesData.push({
+							ApplicantId: applicant.id,
+							subjectName: subjectName,
+							grade: +grade
+						})
+					}
+				}
+
+				if (gradesData.length > 0) {
+					await SubjectGrade.bulkCreate(gradesData, { transaction: t })
+				}
+			}
+
+			if (row['Опекун']) {
+				await LegalRepresentative.create(
+					{
+						ApplicantId: applicant.id,
+						lastName: row['Имя опекуна'] ? row['Имя опекуна'].trim() : null,
+						firstName: row['Фамилия опекуна']
+							? row['Фамилия опекуна'].trim()
+							: null,
+						middleName: row['Отчество опекуна']
+							? row['Отчество опекуна'].trim()
+							: null,
+						phone: row['Телефон опекуна']
+							? String(row['Телефон опекуна']).trim()
+							: null,
+						role: row['Роль опекуна'] ? row['Роль опекуна'].trim() : null
+					},
+					{ transaction: t }
+				)
+			}
+
+			if (row['Льготы']) {
+				const benefitsData = []
+
+				const benefits = String(row['Льготы'])
+					.split(',')
+					.map(name => name.trim())
+
+				for (const name of benefits) {
+					const [benefit] = await Benefit.findOrCreate({
+						where: { name: name },
+						transaction: t
+					})
+
+					benefitsData.push(benefit)
+				}
+
+				await applicant.setBenefits(benefitsData, { transaction: t })
+			}
 
 			await t.commit()
 			createdCount++

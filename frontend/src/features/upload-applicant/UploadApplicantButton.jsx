@@ -21,6 +21,7 @@ const UploadApplicantButton = () => {
 			await uploadApplicant(formData)
 
 			alert('Импорт завершен')
+			location.reload()
 		} catch (err) {
 			console.error(err)
 			alert('Произошла ошибка при импорте')

@@ -40,11 +40,13 @@ exports.updateRepresentative = catchAsync(async (req, res) => {
 	const applicant = await Applicant.findByPk(applicantId)
 	if (!applicant) throw httpError('Абитуриент отсутствует', 404)
 
-	await LegalRepresentative.update(req.body, {
+	const [affectedRows] = await LegalRepresentative.update(req.body, {
 		where: { ApplicantId: applicantId }
 	})
 
-	res.json({ success: true })
+	return res.status(200).json({
+		updatedCount: affectedRows
+	})
 })
 
 exports.deleteRepresentative = catchAsync(async (req, res) => {

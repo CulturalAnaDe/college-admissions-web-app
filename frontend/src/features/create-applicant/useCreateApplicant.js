@@ -68,7 +68,7 @@ const useCreateApplicant = () => {
 
 			SubjectGrades: [],
 
-			LegalRepresentative: null
+			LegalRepresentative: {}
 		},
 
 		validate: validateApplicant,

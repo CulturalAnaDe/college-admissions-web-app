@@ -10,13 +10,13 @@ export const getRepresentativeById = async id => {
 	return res.data
 }
 
-export const createRepresentative = async data => {
-	const res = await apiClient.post('/api/representative', data)
+export const createRepresentative = async (applicantId, data) => {
+	const res = await apiClient.post(`/api/representative/${applicantId}`, data)
 	return res.data
 }
 
-export const updateRepresentative = async (id, data) => {
-	const res = await apiClient.put(`/api/representative/${id}`, data)
+export const updateRepresentative = async (applicantId, data) => {
+	const res = await apiClient.put(`/api/representative/${applicantId}`, data)
 	return res.data
 }
 
