@@ -25,7 +25,7 @@ const GroupCreateForm = () => {
 		try {
 			await createGroup(group)
 			alert('Группа успешно создана!')
-			navigate('/groups')
+			navigate('/group')
 		} catch (err) {
 			console.error(err)
 			alert('Ошибка при создании группы')

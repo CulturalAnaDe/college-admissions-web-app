@@ -21,11 +21,11 @@ const QualificationCreateForm = () => {
 	const handleSubmit = async () => {
 		try {
 			await createQualification(qualification)
-			alert('Специальность успешно создана!')
+			alert('Квалификация успешно создана!')
 			navigate('/qualification')
 		} catch (err) {
 			console.error(err)
-			alert('Ошибка при создании специальности')
+			alert('Ошибка при создании квалификации')
 		}
 	}
 

@@ -32,7 +32,7 @@ const QualificationEditForm = () => {
 	const handleSubmit = async () => {
 		try {
 			await updateQualification(id, qualification)
-			alert('Специальность успешно обновлена!')
+			alert('Квалификация успешно обновлена!')
 		} catch (err) {
 			console.log(err)
 			alert('Ошибка при обновлении')
