@@ -1,0 +1,41 @@
+services:
+  postgres_db:
+    image: postgres:18-alpine
+    container_name: college_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgresql
+      POSTGRES_DB: college_admissions
+      PGDATA: /var/lib/postgresql/data/pgdata # Добавляем путь для PostgreSQL 18
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql # Меняем путь монтирования здесь
+
+  # Бэкенд и Фронтенд остаются без изменений
+  backend:
+    build: ./backend
+    container_name: college_backend
+    restart: always
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - postgres_db
+    volumes:
+      - college_uploads:/app/uploads
+
+  frontend:
+    build: ./frontend
+    container_name: college_frontend
+    restart: always
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  college_uploads:
