@@ -67,14 +67,22 @@ const ApplicantExport = ({ applicants, specialties }) => {
 		benefits: a =>
 			a.Benefits?.length ? a.Benefits.map(b => b.name).join(', ') : '-',
 		phone: a => a.phone,
-		gender: a => a.gender,
+		gender: a => (a.gender === 'male' ? 'Мужской' : 'Женский'),
 		nationality: a => a.nationality,
 		citizenship: a => a.citizenship,
 		fioRepresentative: a =>
-			`${a.LegalRepresentative.lastName} ${a.LegalRepresentative.firstName} ${a.LegalRepresentative.middleName}`,
-		phoneRepresentative: a => a.phoneRepresentative,
-		roleRepresentative: a =>
-			a.roleRepresentative === 'male' ? 'Мужской' : 'Женский'
+			`${a?.LegalRepresentative?.lastName ?? ''} ${a?.LegalRepresentative?.firstName ?? ''} ${a?.LegalRepresentative?.middleName ?? ''}`,
+		phoneRepresentative: a =>
+			a?.phoneRepresentative || a?.LegalRepresentative?.phone || '-',
+		roleRepresentative: a => {
+			const role = a?.roleRepresentative || a?.LegalRepresentative?.role
+			const rolesMap = {
+				mother: 'Мать',
+				father: 'Отец',
+				guardian: 'Опекун'
+			}
+			return rolesMap[role] || (role ? 'Опекун' : '-')
+		}
 	}
 
 	const handleExport = () => {

@@ -21,6 +21,7 @@ import {
 	SpecialtyListPage
 } from '@/pages/Specialties'
 import StatsListPage from '@/pages/Stats'
+import { UserCreatePage, UserPage } from '@/pages/Users'
 import { Layout, PrivateRoute } from '@/widgets/layout'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
@@ -114,6 +115,14 @@ function App() {
 					<Route
 						path='/stats'
 						element={<StatsListPage />}
+					/>
+					<Route
+						path='/user'
+						element={<UserPage />}
+					/>
+					<Route
+						path='/user/new'
+						element={<UserCreatePage />}
 					/>
 				</Route>
 			</Routes>

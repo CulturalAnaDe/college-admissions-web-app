@@ -58,9 +58,13 @@ export const useAuth = navigate => {
 						return
 					}
 
-					navigate('/')
+					const updatedUserData = await me()
+					setUser(updatedUserData?.user || null)
+
+					if (navigate) navigate('/')
 				}
-			} catch {
+			} catch (error) {
+				console.error(error)
 				formik.setFieldError('code', 'Неверный код')
 			} finally {
 				setLoading(false)
@@ -73,6 +77,8 @@ export const useAuth = navigate => {
 		loading,
 		formik,
 		step,
-		setStep
+		setStep,
+		isAuthenticated: !!user,
+		isAdmin: user?.role === 'superadmin'
 	}
 }

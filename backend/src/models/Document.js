@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		filePath: {
 			type: DataTypes.TEXT,
-			allowNull: false
+			allowNull: true
 		}
 	})
 }

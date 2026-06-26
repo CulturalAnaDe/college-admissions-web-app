@@ -2,6 +2,7 @@ const {
 	Applicant,
 	EducationInfo,
 	Qualification,
+	Specialty,
 	Group,
 	SubjectGrade,
 	Document,
@@ -129,7 +130,7 @@ exports.deleteApplicant = catchAsync(async (req, res) => {
 	if (!applicant) throw httpError('Абитуриента не существует', 404)
 
 	await applicant.destroy()
-	res.json({ message: 'Абитуриент удален!' })
+	res.json({ message: 'Абитуриент удален' })
 })
 
 exports.assignBenefits = catchAsync(async (req, res) => {
@@ -297,12 +298,45 @@ exports.uploadApplicantFile = catchAsync(async (req, res) => {
 
 	let createdCount = 0
 
+	const documentsList = [
+		{ excelKey: 'Удостоверение личности / паспорт', type: 'id_card' },
+		{ excelKey: 'Аттестат (оригинал)', type: 'certificate' },
+		{ excelKey: 'Приложение к аттестату', type: 'certificate_appendix' },
+		{ excelKey: 'ЕНТ сертификат', type: 'ent_certificate' },
+		{ excelKey: 'Фотографии 3x4', type: 'photo' },
+		{ excelKey: 'Медицинская справка 075-У', type: 'medical_075' },
+		{ excelKey: 'Флюорография', type: 'fluorography' },
+		{ excelKey: 'Копия удостоверения личности', type: 'id_copy' },
+		{
+			excelKey: 'Приписное свидетельство (для юношей)',
+			type: 'military_certificate'
+		},
+		{ excelKey: 'Документы, подтверждающие льготы', type: 'benefits_docs' }
+	]
+
 	for (const row of data) {
 		if (!row['Фамилия'] || !row['Имя'] || !row['ИИН']) continue
 
 		const t = await sequelize.transaction()
 
 		try {
+			const [specialty] = await Specialty.findOrCreate({
+				where: { code: String(row['Код']) },
+				defaults: { name: row['Специальность'].trim() },
+				transaction: t
+			})
+
+			const qualificationName = String(row['Квалификация']).trim()
+
+			const [qualification] = await Qualification.findOrCreate({
+				where: {
+					name: qualificationName,
+					SpecialtyId: specialty.id
+				},
+				transaction: t
+			})
+			qualificationId = qualification.id
+
 			const applicant = await Applicant.create(
 				{
 					lastName: row['Фамилия'].trim(),
@@ -318,7 +352,8 @@ exports.uploadApplicantFile = catchAsync(async (req, res) => {
 						? String(row['Телефон абитуриента']).trim()
 						: null,
 					email: row['Почта'] ? row['Почта'].trim() : null,
-					status: 'pending'
+					status: 'pending',
+					QualificationId: qualification.id
 				},
 				{ transaction: t }
 			)
@@ -333,6 +368,23 @@ exports.uploadApplicantFile = catchAsync(async (req, res) => {
 				},
 				{ transaction: t }
 			)
+
+			const docsToCreate = []
+			for (const doc of documentsList) {
+				const hasDoc = row[doc.excelKey] === 'Да'
+
+				if (hasDoc) {
+					docsToCreate.push({
+						ApplicantId: applicant.id,
+						type: doc.type,
+						filePath: null
+					})
+				}
+			}
+
+			if (docsToCreate.length > 0) {
+				await Document.bulkCreate(docsToCreate, { transaction: t })
+			}
 
 			if (row['Оценки']) {
 				const gradesData = []

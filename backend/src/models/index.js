@@ -13,6 +13,7 @@ const LegalRepresentative = require('./LegalRepresentative')(
 	sequelize,
 	DataTypes
 )
+const User = require('./User')(sequelize, DataTypes)
 
 Applicant.hasOne(LegalRepresentative, { onDelete: 'CASCADE' })
 LegalRepresentative.belongsTo(Applicant)
@@ -51,5 +52,6 @@ module.exports = {
 	Qualification,
 	Group,
 	Benefit,
-	LegalRepresentative
+	LegalRepresentative,
+	User
 }

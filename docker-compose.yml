@@ -7,13 +7,12 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgresql
       POSTGRES_DB: college_admissions
-      PGDATA: /var/lib/postgresql/data/pgdata # Добавляем путь для PostgreSQL 18
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - '5432:5432'
     volumes:
-      - pgdata:/var/lib/postgresql # Меняем путь монтирования здесь
+      - pgdata:/var/lib/postgresql
 
-  # Бэкенд и Фронтенд остаются без изменений
   backend:
     build: ./backend
     container_name: college_backend
@@ -28,7 +27,10 @@ services:
       - college_uploads:/app/uploads
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_URL=http://admission.collegeit.edu.kz
     container_name: college_frontend
     restart: always
     ports:

@@ -4,7 +4,7 @@ import { GrFormNextLink } from 'react-icons/gr'
 
 const PaginatedTable = ({ data = [], columns = [], renderRow }) => {
 	const [page, setPage] = useState(1)
-	const limit = 11
+	const limit = 10
 
 	const totalPages = Math.ceil(data.length / limit)
 	const startIndex = (page - 1) * limit

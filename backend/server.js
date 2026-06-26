@@ -6,8 +6,9 @@ const fs = require('fs')
 
 const PORT = process.env.PORT || 3000
 
-if (!fs.existsSync('./uploads')) {
-	fs.mkdirSync('./uploads')
+const uploadDir = './uploads/documents'
+if (!fs.existsSync(uploadDir)) {
+	fs.mkdirSync(uploadDir, { recursive: true })
 }
 
 const bot = new Telegraf(process.env.BOT_TOKEN)

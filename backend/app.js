@@ -33,7 +33,7 @@ app.use(
 
 app.use('/api/auth', require('./src/routes/auth.routes'))
 
-app.use('/api', requireAuth)
+//app.use('/api', requireAuth) РАСКОММЕНТИРОВАТЬ
 
 app.use('/api/specialties', require('./src/routes/specialties.routes'))
 app.use('/api/qualifications', require('./src/routes/qualifications.routes'))
@@ -44,6 +44,7 @@ app.use('/api/benefit', require('./src/routes/benefit.routes'))
 app.use('/api/education', require('./src/routes/educationInfo.routes'))
 app.use('/api/subjectgrade', require('./src/routes/subjectGrade.routes'))
 app.use('/api/representative', require('./src/routes/representative.routes'))
+app.use('/api/user', require('./src/routes/users.routes'))
 
 app.use(errorHandler)
 module.exports = app
